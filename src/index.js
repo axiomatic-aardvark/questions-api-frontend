@@ -54,7 +54,7 @@ const App = () => {
     // });'
 
     axios
-      .post("http://206.189.13.74:8000/questions", {
+      .post("https://cors-anywhere.herokuapp.com/http://206.189.13.74:8000/questions", {
         label,
         option_one: correctAnswer,
         option_two: optionOne,
