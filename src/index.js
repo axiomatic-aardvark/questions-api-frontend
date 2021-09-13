@@ -11,7 +11,7 @@ import "./index.css";
 const axios = require("axios");
 
 const App = () => {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data));
@@ -64,6 +64,7 @@ const App = () => {
       })
       .then(function (response) {
         console.log(response);
+        reset();
 
         toast.success("Готово", {
           position: "top-center",
