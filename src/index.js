@@ -42,19 +42,8 @@ const App = () => {
       return;
     }
 
-    // const myApi = axios.create({
-    //   baseURL: 'http://someUrl/someEndpoint',
-    //   timeout: 10000,
-    //   withCredentials: true,
-    //   transformRequest: [(data) => JSON.stringify(data.data)],
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   }
-    // });'
-
     axios
-      .post("https://cors-anywhere.herokuapp.com/http://206.189.13.74:8000/questions", {
+      .post("https://www.questions-server.xyz/questions", {
         label,
         option_one: correctAnswer,
         option_two: optionOne,
