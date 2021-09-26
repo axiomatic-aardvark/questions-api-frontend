@@ -43,14 +43,17 @@ const App = () => {
     }
 
     axios
-      .post("https://www.questions-server.xyz/questions", {
-        label,
-        option_one: correctAnswer,
-        option_two: optionOne,
-        option_three: optionTwo,
-        option_four: optionThree,
-        correct_answer: correctAnswer,
-      })
+      .post(
+        "https://mysterious-garden-19556.herokuapp.com/https://www.questions-server.xyz/questions",
+        {
+          label,
+          option_one: correctAnswer,
+          option_two: optionOne,
+          option_three: optionTwo,
+          option_four: optionThree,
+          correct_answer: correctAnswer,
+        }
+      )
       .then(function (response) {
         console.log(response);
         reset();
