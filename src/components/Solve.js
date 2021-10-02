@@ -55,6 +55,7 @@ const Question = ({
                 optionD: shuffled[3],
                 rightAnswer: rightAnswer,
                 chosenAnswer: a,
+                comingFromSolveKind: false
               })
             }
             className={`answer-btn`}

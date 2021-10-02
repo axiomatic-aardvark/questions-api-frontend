@@ -57,6 +57,7 @@ const Question = ({
                 rightAnswer: rightAnswer,
                 chosenAnswer: a,
                 kind: kind,
+                comingFromSolveKind: true,
               })
             }
             className={`answer-btn`}
@@ -73,7 +74,6 @@ const Question = ({
 
 const SolveKind = () => {
   let history = useHistory();
-  console.log("uuh ", history);
 
   const [question, setQuestion] = useState();
   const [empty, setEmpty] = useState(false);
@@ -148,15 +148,22 @@ const SolveKind = () => {
         <option value="Vegetativna">Вегетативна нервна система</option>
       </select>
 
-      {!empty ? <Question
-        label={question["label"]}
-        optionA={question["option_one"]}
-        optionB={question["option_two"]}
-        optionC={question["option_three"]}
-        optionD={question["option_four"]}
-        rightAnswer={question["correct_answer"]}
-        kind={question["kind"]}
-      /> : <span className="no-items">Няма резултат...</span>}
+      {!empty ? (
+        <Question
+          label={question["label"]}
+          optionA={question["option_one"]}
+          optionB={question["option_two"]}
+          optionC={question["option_three"]}
+          optionD={question["option_four"]}
+          rightAnswer={question["correct_answer"]}
+          kind={question["kind"]}
+        />
+      ) : (
+        <div className="no-items-wrapper">
+          <span className="no-items">Няма резултат...</span>
+          <img src="https://i.ytimg.com/vi/jXdbw21SKQg/mqdefault.jpg" alt="crying-cat"/>
+        </div>
+      )}
       <ToastContainer
         position="top-center"
         autoClose={5000}

@@ -88,11 +88,11 @@ const Summary = () => {
   const handlers = useSwipeable({
     onSwipedLeft: (eventData) => {
       console.log("swipe!");
-      
+
       history.push("test-kind", {
         kind: kind,
-      })
-    }
+      });
+    },
   });
 
   let history = useHistory();
@@ -106,15 +106,18 @@ const Summary = () => {
     rightAnswer,
     chosenAnswer,
     kind,
+    comingFromSolveKind,
   } = history.location.state;
 
   return (
     <div {...handlers} className="summary-wrapper">
       <Button
         onClick={() =>
-          history.push("test-kind", {
-            kind: kind,
-          })
+          comingFromSolveKind
+            ? history.push("test-kind", {
+                kind: kind,
+              })
+            : history.push("/")
         }
         variant="contained"
       >
