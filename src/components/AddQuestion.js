@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Input as AntdInput } from "antd";
 import { Link } from "react-router-dom";
@@ -10,6 +11,11 @@ const axios = require("axios");
 
 const AddQuestion = () => {
   const { control, handleSubmit, reset } = useForm();
+  const [kind, setKind] = useState("Fiziologiq");
+
+  const changeKind = (e) => {
+    setKind(e.target.value);
+  };
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data));
@@ -50,6 +56,7 @@ const AddQuestion = () => {
           option_three: optionTwo,
           option_four: optionThree,
           correct_answer: correctAnswer,
+          kind: kind,
         }
       )
       .then(function (response) {
@@ -84,9 +91,14 @@ const AddQuestion = () => {
 
   return (
     <div className="add-question-wrapper">
-      <Link style={{ textDecoration: "none" }} to="/">
-        <Button variant="contained">Тест</Button>
-      </Link>
+      <div className="nav-btns">
+        <Link style={{ textDecoration: "none" }} to="/">
+          <Button variant="contained">Тест Всички</Button>
+        </Link>
+        <Link style={{ textDecoration: "none" }} to="/test-kind">
+          <Button variant="contained">Тест Група</Button>
+        </Link>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>Въпрос</label>
         <Controller
@@ -128,20 +140,41 @@ const AddQuestion = () => {
           placeholder="Отговор 3"
           defaultValue=""
         />
+        <label>Група</label>
+        <select className="select-css" onChange={changeKind} value={kind}>
+          <option value="Fiziologiq">Обща физиология</option>
+          <option value="Kruv">Кръв</option>
+          <option value="Muskuli">Мускули</option>
+          <option value="Surdechno-sudova">Сердечно-съдова система</option>
+          <option value="Dihatelna">Дихателна система</option>
+          <option value="Hranosmilatelna">Храносмилателна система</option>
+          <option value="Obmqna-na-veshtestvata">Обмяна на веществата</option>
+          <option value="Obmqna-na-energiqta">Обмяна на енергията</option>
+          <option value="Otdelitelna">Отделителна система</option>
+          <option value="Endokrinna">Ендокринна система</option>
+          <option value="Muzhka-i-zhenska">
+            Мъжка и женска репродуктивна система
+          </option>
+          <option value="Nervna">Нервна система</option>
+          <option value="Setivni-sistemi">Сетивни системи</option>
+          <option value="Regulaciq">Регулация на движенията</option>
+          <option value="Sun">Сън и бодърстване</option>
+          <option value="Vegetativna">Вегетативна нервна система</option>
+        </select>
 
         <input type="submit" value="Запази" />
       </form>
       <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

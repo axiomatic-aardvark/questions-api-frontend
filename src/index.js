@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import AddQuestion from "./components/AddQuestion";
 import Solve from "./components/Solve";
+import SolveKind from "./components/SolveKind";
 import Summary from "./components/Summary";
 
 import "./index.css";
@@ -16,6 +17,9 @@ const App = () => {
       </Route>
       <Route path="/summary">
         <Summary />
+      </Route>
+      <Route path="/test-kind">
+        <SolveKind />
       </Route>
       <Route path="/">
         <Solve />

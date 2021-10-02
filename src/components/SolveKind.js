@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -29,6 +29,7 @@ const Question = ({
   optionC,
   optionD,
   rightAnswer,
+  kind,
 }) => {
   let history = useHistory();
 
@@ -54,7 +55,8 @@ const Question = ({
                 optionC: shuffled[2],
                 optionD: shuffled[3],
                 rightAnswer: rightAnswer,
-                chosenAnswer: a
+                chosenAnswer: a,
+                kind: kind,
               })
             }
             className={`answer-btn`}
@@ -69,21 +71,39 @@ const Question = ({
   );
 };
 
-const Solve = () => {
+const SolveKind = () => {
+  let history = useHistory();
+  console.log("uuh ", history);
+
   const [question, setQuestion] = useState();
+  const [empty, setEmpty] = useState(false);
+
+  let initialKind = history.location.state ? history.location.state.kind : null;
+
+  const [kind, setKind] = useState(initialKind || "Fiziologiq");
+
+  const changeKind = (e) => {
+    console.log(e.target.value);
+    setKind(e.target.value);
+  };
 
   useEffect(() => {
     const axios = require("axios");
 
     axios
       .get(
-        "https://mysterious-garden-19556.herokuapp.com/https://www.questions-server.xyz/questions/random"
+        `https://mysterious-garden-19556.herokuapp.com/https://www.questions-server.xyz/questions/kind/${kind}`
       )
       .then(function (response) {
         console.log(response);
-        console.log(response.data.id);
 
-        setQuestion(response.data);
+        if (response.data.length > 0) {
+          setEmpty(false);
+          setQuestion(shuffle(response.data)[0]);
+        } else {
+          console.log("no items");
+          setEmpty(true);
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -98,21 +118,45 @@ const Solve = () => {
           closeButton: false,
         });
       });
-  }, []);
+  }, [kind]);
 
   return question ? (
-    <div id="test-all" className="solve-wrapper">
+    <div id="test-kind" className="solve-wrapper">
       <Link style={{ textDecoration: "none" }} to="/add-question">
         <Button variant="contained">Назад</Button>
       </Link>
-      <Question
+
+      <label>Група</label>
+      <select className="select-css" onChange={changeKind} value={kind}>
+        <option value="Fiziologiq">Обща физиология</option>
+        <option value="Kruv">Кръв</option>
+        <option value="Muskuli">Мускули</option>
+        <option value="Surdechno-sudova">Сердечно-съдова система</option>
+        <option value="Dihatelna">Дихателна система</option>
+        <option value="Hranosmilatelna">Храносмилателна система</option>
+        <option value="Obmqna-na-veshtestvata">Обмяна на веществата</option>
+        <option value="Obmqna-na-energiqta">Обмяна на енергията</option>
+        <option value="Otdelitelna">Отделителна система</option>
+        <option value="Endokrinna">Ендокринна система</option>
+        <option value="Muzhka-i-zhenska">
+          Мъжка и женска репродуктивна система
+        </option>
+        <option value="Nervna">Нервна система</option>
+        <option value="Setivni-sistemi">Сетивни системи</option>
+        <option value="Regulaciq">Регулация на движенията</option>
+        <option value="Sun">Сън и бодърстване</option>
+        <option value="Vegetativna">Вегетативна нервна система</option>
+      </select>
+
+      {!empty ? <Question
         label={question["label"]}
         optionA={question["option_one"]}
         optionB={question["option_two"]}
         optionC={question["option_three"]}
         optionD={question["option_four"]}
         rightAnswer={question["correct_answer"]}
-      />
+        kind={question["kind"]}
+      /> : <span className="no-items">Няма резултат...</span>}
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -125,7 +169,9 @@ const Solve = () => {
         pauseOnHover
       />
     </div>
-  ) : <CircularProgress className="spinner" size={100} color={"success"}/>
+  ) : (
+    <CircularProgress className="spinner" size={100} color={"success"} />
+  );
 };
 
-export default Solve;
+export default SolveKind;

@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
-import { Link, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
 import "react-toastify/dist/ReactToastify.css";
 
 const Question = ({
@@ -12,7 +13,9 @@ const Question = ({
   chosenAnswer,
 }) => {
   // return a.endsWith(";") ? a.substring(0, a.length - 1) : a;
-  rightAnswer = rightAnswer.endsWith(";") ? rightAnswer.substring(0, rightAnswer.length - 1) : rightAnswer;
+  rightAnswer = rightAnswer.endsWith(";")
+    ? rightAnswer.substring(0, rightAnswer.length - 1)
+    : rightAnswer;
 
   return (
     <div className="question">
@@ -35,7 +38,7 @@ const Question = ({
 
       <Button
         style={
-            optionB === rightAnswer
+          optionB === rightAnswer
             ? { textTransform: "capitalize", backgroundColor: "green" }
             : optionB === chosenAnswer
             ? { textTransform: "capitalize", backgroundColor: "red" }
@@ -50,7 +53,7 @@ const Question = ({
 
       <Button
         style={
-            optionC === rightAnswer
+          optionC === rightAnswer
             ? { textTransform: "capitalize", backgroundColor: "green" }
             : optionC === chosenAnswer
             ? { textTransform: "capitalize", backgroundColor: "red" }
@@ -65,7 +68,7 @@ const Question = ({
 
       <Button
         style={
-            optionD === rightAnswer
+          optionD === rightAnswer
             ? { textTransform: "capitalize", backgroundColor: "green" }
             : optionD === chosenAnswer
             ? { textTransform: "capitalize", backgroundColor: "red" }
@@ -82,16 +85,42 @@ const Question = ({
 };
 
 const Summary = () => {
-  const location = useLocation();
-  console.log(location);
-  let { label, optionA, optionB, optionC, optionD, rightAnswer, chosenAnswer } =
-    location.state;
+  const handlers = useSwipeable({
+    onSwipedLeft: (eventData) => {
+      console.log("swipe!");
+      
+      history.push("test-kind", {
+        kind: kind,
+      })
+    }
+  });
+
+  let history = useHistory();
+  console.log(history.location);
+  let {
+    label,
+    optionA,
+    optionB,
+    optionC,
+    optionD,
+    rightAnswer,
+    chosenAnswer,
+    kind,
+  } = history.location.state;
 
   return (
-    <div className="summary-wrapper">
-      <Link style={{ textDecoration: "none" }} to="/">
-        <Button variant="contained">Нов въпрос</Button>
-      </Link>
+    <div {...handlers} className="summary-wrapper">
+      <Button
+        onClick={() =>
+          history.push("test-kind", {
+            kind: kind,
+          })
+        }
+        variant="contained"
+      >
+        Нов въпрос
+      </Button>
+
       <Question
         label={label}
         optionA={optionA}
