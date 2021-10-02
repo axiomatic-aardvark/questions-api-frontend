@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -45,7 +45,7 @@ const Question = ({
       {shuffled.map((a) => {
         return (
           <Button
-            style={{ textTransform: "capitalize" }}
+            style={{textTransform: "capitalize" }}
             onClick={() =>
               history.push("summary", {
                 label: label,
@@ -54,7 +54,7 @@ const Question = ({
                 optionC: shuffled[2],
                 optionD: shuffled[3],
                 rightAnswer: rightAnswer,
-                chosenAnswer: a
+                chosenAnswer: a,
               })
             }
             className={`answer-btn`}
@@ -125,7 +125,9 @@ const Solve = () => {
         pauseOnHover
       />
     </div>
-  ) : <CircularProgress className="spinner" size={100} color={"success"}/>
+  ) : (
+    <CircularProgress className="spinner" size={100} color={"success"} />
+  );
 };
 
 export default Solve;

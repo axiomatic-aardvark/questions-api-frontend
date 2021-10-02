@@ -191,6 +191,10 @@ form {
   max-width: 500px;
 }
 
+.answer-btn:hover {
+  background: #ec5990 !important;
+}
+
 .label {
   text-align: center;
   color: white;
